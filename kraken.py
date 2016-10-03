@@ -1,5 +1,4 @@
-from os import listdir
-from os.path import isfile, join, split, splitext
+import os
 import shutil
 import h5py
 import sys
@@ -24,8 +23,19 @@ def parse_kraken_out(out):
 used_file = []
 mypath = sys.argv[1]
 output = sys.argv[2]
-kraken_db = '/docker/minikraken_db'
-files = set([join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))])
+kraken_db = sys.argv[3]
+
+
+if not os.path.isdir(mypath):
+	sys.exit()
+
+if not os.path.isdir(output):
+	sys.exit()
+
+if not os.path.isdir(minikraken_db):
+	sys.exit()
+
+files = set([os.path.join(mypath, f) for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))])
 species = {None:0}
 number_of_reads = 0
 
@@ -45,7 +55,7 @@ print('The taxonomy data has been loaded.')
 
 print("Now, let's detect some species!")
 while True:
-	new_files = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
+	new_files = [os.path.join(mypath, f) for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))]
 	if len(new_files) > 0:
 		for f in new_files:
 			# Run kraken on new files
