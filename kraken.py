@@ -27,12 +27,15 @@ kraken_db = sys.argv[3]
 
 
 if not os.path.isdir(mypath):
+	print(mypath + ' is not a directory')
 	sys.exit()
 
 if not os.path.isdir(output):
+	print(outout + ' is not a directory')
 	sys.exit()
 
 if not os.path.isdir(minikraken_db):
+	print(minikraken_db + ' is not a directory')
 	sys.exit()
 
 files = set([os.path.join(mypath, f) for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))])
